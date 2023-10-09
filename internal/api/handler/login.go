@@ -13,16 +13,23 @@ import (
 )
 
 func RenderLoginForm(c *gin.Context) {
+	isLoggedIn, ok := c.Get("IsLoggedIn")
+	if ok && isLoggedIn.(bool) {
+		c.Redirect(http.StatusSeeOther, "/chat")
+		return
+	}
+
 	tmpl, err := template.ParseFiles("public/templates/base.html", "public/templates/partials/login/login.html")
 	if err != nil {
 		c.String(http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	err = tmpl.ExecuteTemplate(c.Writer, "base.html", map[string]interface{}{
+	data := prepareTemplateData(c, map[string]interface{}{
 		"Title": "Login",
 	})
 
+	err = tmpl.ExecuteTemplate(c.Writer, "base.html", data)
 	if err != nil {
 		c.String(http.StatusInternalServerError, err.Error())
 	}
@@ -53,7 +60,7 @@ func HandleLogin(c *gin.Context) {
 
 		http.SetCookie(c.Writer, cookie)
 
-		c.Redirect(http.StatusSeeOther, "/secured")
+		c.String(http.StatusOK, "<script>window.location.href='/chat';</script>")
 	} else {
 		c.String(http.StatusUnauthorized, "Invalid credentials")
 	}

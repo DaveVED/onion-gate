@@ -14,6 +14,11 @@ import (
 )
 
 func RenderSignUpForm(c *gin.Context) {
+	isLoggedIn, ok := c.Get("IsLoggedIn")
+	if ok && isLoggedIn.(bool) {
+		c.Redirect(http.StatusSeeOther, "/chat")
+		return
+	}
 	tmpl, err := template.ParseFiles("public/templates/base.html", "public/templates/partials/signup/signup.html")
 	if err != nil {
 		c.String(http.StatusInternalServerError, err.Error())

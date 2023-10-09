@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile
+    volumes:
+      - ./public:/public
+    ports:
+      - "8080:8080"
+    networks:
+      - onion_network
+  
+  nginx:
+    build:
+      context: .
+      dockerfile: deploy/nginx/Dockerfile
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+    networks:
+      - onion_network
+
+  tor:
+    build:
+      context: .
+      dockerfile: deploy/tor/Dockerfile
+    depends_on:
+      - nginx
+    ports:
+      - "9050:9050"
+    volumes:
+      - ./deploy/tor/torrc:/etc/tor/torrc
+    networks:
+      - onion_network
+
+networks:
+  onion_network:
+    # Add configurations for the network if needed

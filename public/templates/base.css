@@ -4,3 +4,9 @@ html, body {
     background-color: #f5f5f5;
     font-family: Arial, sans-serif;
 }
+
+.bi-person-circle {
+    font-size: 1.5rem; /* Increase this value for a larger icon. */
+    vertical-align: middle;
+    margin-right: 2px;
+}

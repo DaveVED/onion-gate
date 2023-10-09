@@ -7,6 +7,7 @@ import (
 	"encoding/base64"
 	"sync"
 	"time"
+	"errors"
 )
 
 type Session struct {
@@ -74,4 +75,16 @@ func IsValidSession(sessionID string) bool {
 	//session.LastActivity = time.Now()
 
 	return true
+}
+
+func DeleteSession(sessionID string) error {
+	sessionMutex.Lock()
+	defer sessionMutex.Unlock()
+
+	if _, exists := sessionStore[sessionID]; !exists {
+		return errors.New("session not found")
+	}
+
+	delete(sessionStore, sessionID)
+	return nil
 }

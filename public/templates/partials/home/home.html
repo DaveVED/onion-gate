@@ -1,0 +1,24 @@
+<!-- home.html -->
+{{define "content"}}
+<div class="container mt-5">
+    <div class="text-center">
+        <h1>Onion-Gate: Secure Chat Room Prototype</h1>
+        <p>
+            Onion-Gate is designed as a demonstrative implementation of a secure chat room. Constructed with <code>HTMX</code> and <code>Go</code>, it serves as an educational reference. It is imperative to note that Onion-Gate is not intended for production deployment; its primary purpose is for illustrative and learning contexts.
+        </p>
+        <h3 class="mt-4">Key Features</h3>
+        <ul class="list-unstyled mt-3">
+            <li><i class="bi bi-shield-lock-fill"></i> 🔒 Enhanced Security: Incorporates a secure login mechanism.</li>
+            <li><i class="bi bi-door-closed-fill"></i> 🚪 Restricted Access: Ensures chat room accessibility only post-authentication.</li>
+            <li><i class="bi bi-chat-text-fill"></i> ⚡ Real-time Chat: Seamlessly engage in instantaneous conversations with live chat updates.</li>
+        </ul>
+        <div class="mt-5">
+            {{ if .IsLoggedIn }}
+                <a href="/chat" class="btn btn-primary btn-lg">Chat</a>
+            {{ else }}
+                <a href="/login" class="btn btn-primary btn-lg">Login/Signup</a>
+            {{ end }}
+        </div>
+    </div>
+</div>
+{{end}}

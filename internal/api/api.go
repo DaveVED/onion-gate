@@ -16,10 +16,14 @@ func Start() {
 	// Global Middleware
 	router.Use(middleware.CORSMiddleware())
 	router.Use(middleware.DatabaseMiddleware())
+	router.Use(middleware.SetAuthStatusMiddleware()) // Updated to use JWT
 
 	// load css
 	router.Static("/public/templates", "./public/templates")
 
+	// Home Route
+	router.GET("/", handler.RenderHome)
+	
 	// Login Routes
 	router.GET("/login", handler.RenderLoginForm)
 	router.POST("/login", handler.HandleLogin)
@@ -28,7 +32,11 @@ func Start() {
 	router.GET("/signup", handler.RenderSignUpForm)
 	router.POST("/signup", handler.HandleSignup)
 
-	router.GET("/secured", middleware.AuthMiddleware(), handler.RenderSecuredPage)
+	// Sign out routes
+	router.GET("/signout", handler.HandleSignout)
+	
+	// Chat Routes
+	router.GET("/chat", middleware.RestrictAccessMiddleware(), handler.RenderChatPage)
 
 	router.Run()
 }

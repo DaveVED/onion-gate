@@ -1,0 +1,24 @@
+<!-- signup.html -->
+{{define "content"}}
+<div class="global-container">
+	<div class="card login-form">
+	<div class="card-body">
+		<h3 class="card-title text-center">Signup For Onion Gate</h3>
+		<div class="card-text">
+			<form hx-post="/signup" hx-target="body">
+				<div class="form-group">
+					<label for="usernameInput">User Name</label>
+					<input type="text" class="form-control form-control-sm" id="usernameInput" name="username" aria-describedby="usernameHelp">
+				</div>
+				<div class="form-group">
+					<label for="passwordInput">Password</label>
+					<input type="password" class="form-control form-control-sm" id="passwordInput" name="password">
+				</div>
+				<button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+				<div class="sign-up"> Have an account? <a href="/" hx-get="/">Login</a></div>
+			</form>
+		</div>
+	</div>
+</div>
+</div>
+{{end}}
